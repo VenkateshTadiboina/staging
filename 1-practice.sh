@@ -1,3 +1,4 @@
 #!/bin/bash
-DATE=$(date)
-echo "$DATE"
+PERSON=$1
+PERSON2=$2
+echo "$PERSON,$PERSON2 "
