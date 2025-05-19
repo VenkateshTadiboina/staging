@@ -8,7 +8,7 @@ Y="
 \[33m"
 LOGS_FOLDER="/var/log/shellscript-log"
 SCRIPTNAME=$(echo $0 | cut -d "." -f1)
-LOGS_FOLDER="$LOGS_FOLDER/$SCRIPTNAME"
+LOGS_FOLDER=$LOGS_FOLDER/$SCRIPTNAME.log
 mkdir -p "$LOGS_FOLDER"
 echo "script start time $(date)" | tee -a "$LOGS_FOLDER"
 
