@@ -1,4 +1,5 @@
 #!/bin/bash
+
 USERID=$(id -u)
 G="
 
@@ -6,31 +7,37 @@ G="
 Y="
 
 \[33m"
-LOGS_FOLDER="/var/log/shellscript-log"
-SCRIPTNAME=$(echo $0 | cut -d "." -f1)
-LOGS_FOLDER=$LOGS_FOLDER/$SCRIPTNAME.log
-mkdir -p "$LOGS_FOLDER"
-echo "script start time $(date)" | tee -a "$LOGS_FOLDER"
+LOGS_DIR="/var/log/shellscript-log"
+SCRIPTNAME=$(basename "$0" | cut -d "." -f1)
+LOG_FILE="$LOGS_DIR/$SCRIPTNAME.log"
 
-PACKAGE=("mysql" "python" "nginx")
+# Create directory for logs
+mkdir -p "$LOGS_DIR"
+
+echo "Script start time: $(date)" | tee -a "$LOG_FILE"
+
+# List of packages to install
+PACKAGE_LIST=("mysql" "python" "nginx")
 
 # Function to validate package installation
 VALIDATE() {
     if [ $? -eq 0 ]; then
-        echo "$1 SUCCESS" | tee -a "$LOGS_FOLDER"
+        echo "$1 SUCCESS" | tee -a "$LOG_FILE"
     else
-        echo "$1 FAILURE" | tee -a "$LOGS_FOLDER"
+        echo "$1 FAILURE" | tee -a "$LOG_FILE"
         exit 1
     fi
 }
 
-for PACKAGE in "${PACKAGE[@]}"; do 
-    dnf list installed "$PACKAGE" &>>"$LOGS_FOLDER"
+# Loop through package list
+for PACKAGE in "${PACKAGE_LIST[@]}"; do 
+    dnf list installed "$PACKAGE" &>> "$LOG_FILE"
+    
     if [ $? -ne 0 ]; then
-        echo "$PACKAGE not installed" | tee -a "$LOGS_FOLDER"
-        dnf install "$PACKAGE" -y | tee -a "$LOGS_FOLDER"
+        echo "$PACKAGE not installed, attempting to install..." | tee -a "$LOG_FILE"
+        dnf install "$PACKAGE" -y | tee -a "$LOG_FILE"
         VALIDATE "$PACKAGE"
     else
-        echo "$PACKAGE ALREADY INSTALLED" | tee -a "$LOGS_FOLDER"
+        echo "$PACKAGE is already installed" | tee -a "$LOG_FILE"
     fi
 done
