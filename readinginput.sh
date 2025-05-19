@@ -16,7 +16,7 @@ do
   echo "not install $PACKAGE"   |tee -a $LOGS_FLODER
   dnf install $PACKAGE -y  >>tee -a $LOGS_FLODER
   VALIDATE $? "PACKAGE"
-  else
+  
   echo "$PACKAGE ALREADY INSTALL"   |  tee -a $LOGS_FLODER
   fi
   do
