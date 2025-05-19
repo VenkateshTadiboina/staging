@@ -12,7 +12,7 @@ SCRIPTNAME=$(basename "$0" | cut -d "." -f1)
 LOG_FILE="$LOGS_DIR/$SCRIPTNAME.log"
 
 # Create directory for logs
-mkdir  $LOGS_DIR
+mkdir LOGS_DIR
 
 echo "Script start time: $(date)" | tee -a $LOG_FILE
 
