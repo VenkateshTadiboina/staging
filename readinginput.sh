@@ -12,17 +12,19 @@ SCRIPTNAME=$(basename "$0" | cut -d "." -f1)
 LOG_FILE="$LOGS_DIR/$SCRIPTNAME.log"
 
 # Create directory for logs
-mkdir LOGS_DIR
-
-echo "Script start time: $(date)" | tee -a $LOG_FILE
+mkdir  -p $LOGS_DIR
+  mkdir SCRIPTNAME 
+  mkdir LOG_FILE
+ 
+echo "Script start time: $(date)" &>>$LOG_FILE
 
 # List of packages to install
-PACKAGE_LIST=("mysql" "python" "nginx")
+PACKAGE_LIST=("mangodb" "python3" "nginx")
 
 # Function to validate package installation
 VALIDATE() {
     if [ $? -eq 0 ]; then
-        echo "$1 SUCCESS" | tee -a $LOG_FILE
+        echo "$1 SUCCESS" | tee -a $LOG_FILEz
     else
         echo "$1 FAILURE" | tee -a $LOG_FILE
         exit 1
@@ -31,7 +33,7 @@ VALIDATE() {
 
 # Loop through package list
 for PACKAGE in "${PACKAGE_LIST[@]}"; do 
-    dnf list installed "$PACKAGE" &>> $LOG_FILE
+    dnf list installed "$PACKAGE"
     
     if [ $? -ne 0 ]; then
         echo "$PACKAGE not installed, attempting to install..." | tee -a $LOG_FILE
