@@ -16,10 +16,10 @@ mkdir  -p $LOGS_DIR
   mkdir SCRIPTNAME 
   mkdir LOG_FILE
  
-echo "Script start time: $(date)" &>>$LOG_FILE
+echo "Script start time: $(date)" &>>$LOG_FILE | tee -a $LOG_FILE
 
 # List of packages to install
-PACKAGE_LIST=("mangodb" "python3" "nginx")
+PACKAGE_LIST=("mangodb" "python3" "nginx") | tee -a $LOG_FILE
 
 # Function to validate package installation
 VALIDATE() {
@@ -33,7 +33,7 @@ VALIDATE() {
 
 # Loop through package list
 for PACKAGE in "${PACKAGE_LIST[@]}"; do 
-    dnf list installed "$PACKAGE"
+    dnf list installed "$PACKAGE" | tee -a $LOG_FILE
     
     if [ $? -ne 0 ]; then
         echo "$PACKAGE not installed, attempting to install..." | tee -a $LOG_FILE
