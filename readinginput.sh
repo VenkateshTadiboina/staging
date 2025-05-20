@@ -16,7 +16,7 @@ mkdir  -p $LOGS_DIR
  echo "Script start time: $(date)" 
 
 # List of packages to install
-PACKAGE_LIST=("mangodb" "python3" "nginx") 
+PACKAGE_LIST=("mysql" "python3" "nginx") 
 
 # Function to validate package installation
 VALIDATE() 
