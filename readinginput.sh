@@ -13,19 +13,19 @@ LOG_FILE="$LOGS_DIR/$SCRIPTNAME.log"
 
 # Create directory for logs
 mkdir  -p $LOGS_DIR
- echo "Script start time: $(date)"   &>>$LOGS_DIR
+ echo "Script start time: $(date)"   &>>$LOG_FILE
 
 # List of packages to install
-PACKAGE_LIST=("mysql" "python3" "nginx") &>>$LOGS_DIR
+PACKAGE_LIST=("mysql" "python3" "nginx") &>>$LOG_FILE
 
 # Function to validate package installation
 VALIDATE() 
 {
     if [ $? -eq 0 ]; then
 
-        echo "$1 SUCCESS" &>>$LOGS_DIR
+        echo "$1 SUCCESS" &>>$LOG_FILE
     else
-        echo "$1 FAILURE" &>>$LOGS_DIR
+        echo "$1 FAILURE" &>>$LOG_FILER
         exit 1
     fi
 }
@@ -36,10 +36,10 @@ do
     dnf list installed "$PACKAGE"
     
     if [ $? -ne 0 ]; then
-        echo "$PACKAGE not installed, attempting to install..." &>>$LOGS_DIR
+        echo "$PACKAGE not installed, attempting to install..." &>>$LOG_FILE
         dnf install "$PACKAGE" -y 
         VALIDATE "$PACKAGE"
     else
-        echo "$PACKAGE is already installed" &>>$LOGS_DIR
+        echo "$PACKAGE is already installed" &>>$LOG_FILE
     fi
 done
