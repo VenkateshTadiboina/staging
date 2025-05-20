@@ -31,7 +31,7 @@ VALIDATE()
 }
 
 # Loop through package list
-for PACKAGE in "${PACKAGE_LIST[@]}"; &>>$LOGS_DIR
+for PACKAGE in "${PACKAGE_LIST[@]}";
 do 
     dnf list installed "$PACKAGE"
     
