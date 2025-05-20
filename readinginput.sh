@@ -13,17 +13,16 @@ LOG_FILE="$LOGS_DIR/$SCRIPTNAME.log"
 
 # Create directory for logs
 mkdir  -p $LOGS_DIR
-  mkdir SCRIPTNAME 
-  mkdir LOG_FILE
- 
-echo "Script start time: $(date)" &>>$LOG_FILE | tee -a $LOG_FILE
+ echo "Script start time: $(date)" | tee -a $LOG_FILE
 
 # List of packages to install
 PACKAGE_LIST=("mangodb" "python3" "nginx") | tee -a $LOG_FILE
 
 # Function to validate package installation
-VALIDATE() {
+VALIDATE() 
+{
     if [ $? -eq 0 ]; then
+
         echo "$1 SUCCESS" | tee -a $LOG_FILEz
     else
         echo "$1 FAILURE" | tee -a $LOG_FILE
@@ -41,5 +40,6 @@ for PACKAGE in "${PACKAGE_LIST[@]}"; do
         VALIDATE "$PACKAGE"
     else
         echo "$PACKAGE is already installed" | tee -a $LOG_FILE
+        exit 1
     fi
 done
