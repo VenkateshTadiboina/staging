@@ -19,7 +19,7 @@ mkdir  -p $LOGS_DIR
 
 if [ $USERID -ne 0 ]
 then
-  echo  -e "$R ERROR:: $N Please run this script with root access"  |tee -a $LOG_FILE
+  echo  -e " $R ERROR:: $N Please run this script with root access"  |tee -a $LOG_FILE
   exit 1 # give other than 0 upto 127
 else
   echo "You are running with root access"  |tee -a $LOG_FILE
@@ -29,9 +29,9 @@ fi
 VALIDATE(){
   if [ $1 -eq 0 ]
   then
-    echo -e"Installing $2 is ... $G SUCCESS$N"  |tee -a $LOG_FILE
+    echo -e "Installing $2 is ... $G SUCCESS $N "  |tee -a $LOG_FILE
   else
-    echo -e "Installing $2 is ... $R FAILURE$N"  |tee -a $LOG_FILE
+    echo -e "Installing $2 is ... $R FAILURE $N "  |tee -a $LOG_FILE
     exit 1
   fi
 }
@@ -43,7 +43,7 @@ then
   dnf install mysql -y
   VALIDATE $? "MySQL"
 else
-  echo -e" $Y MySQL is already installed...Nothing to do$N"  |tee -a $LOG_FILE
+  echo -e " $Y MySQL is already installed...Nothing to do $N "  |tee -a $LOG_FILE
 fi
 
 dnf list installed python3  |tee -a $LOG_FILE
@@ -53,7 +53,7 @@ then
   dnf install python3 -y
   VALIDATE $? "python3"
 else
-  echo -e" $Y python3 is already installed...Nothing to do $N"  |tee -a $LOG_FILE
+  echo -e " $Y python3 is already installed...Nothing to do $N"  |tee -a $LOG_FILE
 fi
 
 dnf list installed nginx  |tee -a $LOG_FILE
@@ -63,5 +63,5 @@ then
   dnf install nginx -y
   VALIDATE $? "nginx"
 else
-  echo _-e" $Y nginx is already installed...Nothing to do$N"  |tee -a $LOG_FILE
+  echo -e " $Y nginx is already installed...Nothing to do $N"  |tee -a $LOG_FILE
 fi
